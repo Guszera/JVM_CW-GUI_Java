@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
+//test
 public class ProjectManagerGUI extends JFrame {
     private List<Project> projects;
     private DefaultListModel<String> projectListModel;
