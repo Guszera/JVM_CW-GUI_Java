@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ProjectManagerGUI {
     private ProjectController controller;
@@ -92,7 +93,9 @@ public class ProjectManagerGUI {
 
     private void updateProjectList() {
         StringBuilder projectList = new StringBuilder();
-        for (Project project : controller.getProjectGraph().getProjects().values()) {
+        Map<String, Project> projects = controller.getAllProjects();
+
+        for (Project project : projects.values()) {
             projectList.append("Project ID: ").append(project.getProjectId()).append(", Project Name: ")
                     .append(project.getProjectName()).append("\n");
 
@@ -111,5 +114,14 @@ public class ProjectManagerGUI {
                 frame.setVisible(true);
             }
         });
+    }
+
+    public static void main(String[] args) {
+        // Assuming you have already created an instance of ProjectController and ProjectManagerGUI
+        ProjectGraph projectGraph = new ProjectGraph();
+        ProjectController controller = new ProjectController(projectGraph);
+        ProjectManagerGUI gui = new ProjectManagerGUI(controller);
+
+        gui.display();
     }
 }

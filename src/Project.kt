@@ -1,11 +1,22 @@
-public class Project (val projectID: String, val projectName: String) {
+class Project private constructor(val projectId: String, val projectName: String) {
     val tasks: MutableMap<String, Task> = mutableMapOf()
 
     fun addTask(task: Task) {
-        tasks[task.taskID] = task
+        tasks[task.taskId] = task
     }
 
-    fun removeTask(taskID: String) {
-        tasks.remove(taskID)
+    fun removeTask(taskId: String) {
+        tasks.remove(taskId)
+    }
+
+    companion object {
+        private var projectIdCounter = 1
+
+        @JvmStatic
+        fun createProject(projectName: String): Project {
+            val projectId = "P${projectIdCounter++}"
+            return Project(projectId, projectName)
+
+        }
     }
 }

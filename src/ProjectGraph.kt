@@ -1,12 +1,12 @@
 class ProjectGraph {
-    val projects: MutableMap<String, Project> = mutableMapOf()
+    private val projects: MutableMap<String, Project> = mutableMapOf()
 
     fun addProject(project: Project) {
-        projects[project.projectID] = project
+        projects[project.projectId] = project
     }
 
-    fun removeProject(projectID: String) {
-        projects.remove(projectID)
+    fun removeProject(projectId: String) {
+        projects.remove(projectId)
     }
 
     fun getProjects(): Map<String, Project> {
