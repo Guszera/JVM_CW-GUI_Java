@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
-import java.util.List;
 
 public class ProjectManagerGUI {
     private ProjectController controller;
@@ -16,11 +15,13 @@ public class ProjectManagerGUI {
     private JTextField taskDurationField;
 
 
+    // Constructor to initialize the GUI with a ProjectController
     public ProjectManagerGUI(ProjectController controller) {
         this.controller = controller;
         initialize();
     }
 
+    // Method to initialize the GUI components
     private void initialize() {
         frame = new JFrame("Project Manager");
         frame.setSize(800, 600);
@@ -37,6 +38,7 @@ public class ProjectManagerGUI {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(4, 2));
 
+        // Text fields for input
         projectNameField = new JTextField();
         inputPanel.add(new JLabel("Project Name:"));
         inputPanel.add(projectNameField);
@@ -53,6 +55,7 @@ public class ProjectManagerGUI {
         inputPanel.add(new JLabel("Task Duration:"));
         inputPanel.add(taskDurationField);
 
+        // Buttons for various actions
         JButton createProjectButton = new JButton("Create Project");
         JButton editProjectButton = new JButton("Edit Project");
         JButton deleteProjectButton = new JButton("Delete Project");
@@ -63,6 +66,7 @@ public class ProjectManagerGUI {
         JButton removeSuccessorButton = new JButton("Remove Successor");
         JButton showAdjacencyMatrixButton = new JButton("Show Adjacency Matrix");
 
+        // Action listeners for buttons
         createProjectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -126,6 +130,7 @@ public class ProjectManagerGUI {
             }
         });
 
+        // Adding components to inputPanel
         inputPanel.add(createProjectButton);
         inputPanel.add(editProjectButton);
         inputPanel.add(deleteProjectButton);
@@ -136,17 +141,21 @@ public class ProjectManagerGUI {
         inputPanel.add(removeSuccessorButton);
         inputPanel.add(showAdjacencyMatrixButton);
 
+        // Adding inputPanel to mainPanel
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
 
+        // Adding mainPanel to frame
         frame.getContentPane().add(mainPanel);
     }
 
+    // Method to handle creating a new project
     private void createProject() {
         String projectName = projectNameField.getText();
         controller.createProject(projectName);
         updateProjectList();
     }
 
+    // Method to handle editing a project
     private void editProject() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String newProjectName = JOptionPane.showInputDialog("Enter New Project Name:");
@@ -155,12 +164,14 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to handle deleting a project
     private void deleteProject() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         controller.deleteProject(projectId);
         updateProjectList();
     }
 
+    // Method to handle creating a new task
     private void addTask() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String taskId = taskIdField.getText();
@@ -171,6 +182,7 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to handle editing a task
     private void editTask() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String taskId = JOptionPane.showInputDialog("Enter Task ID:");
@@ -181,6 +193,7 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to handle deleting a task
     private void deleteTask() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String taskId = JOptionPane.showInputDialog("Enter Task ID:");
@@ -188,6 +201,7 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to update the Project List with tasks and their successors
     private void updateProjectList() {
         StringBuilder projectList = new StringBuilder();
         Map<String, Project> projects = controller.getAllProjects();
@@ -208,6 +222,7 @@ public class ProjectManagerGUI {
         projectTextArea.setText(projectList.toString());
     }
 
+    // Method to handle adding a new successor between two tasks
     private void addSuccessor() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String taskId = JOptionPane.showInputDialog("Enter Task ID:");
@@ -217,6 +232,7 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to handle removing a successor of a task
     private void removeSuccessor() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String taskId = JOptionPane.showInputDialog("Enter Task ID:");
@@ -226,12 +242,14 @@ public class ProjectManagerGUI {
         updateProjectList();
     }
 
+    // Method to handle to show the Adjacency Matrix
     private void showAdjacencyMatrix() {
         String projectId = JOptionPane.showInputDialog("Enter Project ID:");
         String adjacencyMatrix = controller.getAdjacencyMatrix(projectId);
         JOptionPane.showMessageDialog(frame, adjacencyMatrix, "Adjacency Matrix", JOptionPane.PLAIN_MESSAGE);
     }
 
+    // Method to display the GUI
     public void display() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -241,8 +259,8 @@ public class ProjectManagerGUI {
         });
     }
 
+    // Main method to display the GUI
     public static void main(String[] args) {
-        // Assuming you have already created an instance of ProjectController and ProjectManagerGUI
         ProjectGraph projectGraph = new ProjectGraph();
         ProjectController controller = new ProjectController(projectGraph);
         ProjectManagerGUI gui = new ProjectManagerGUI(controller);
