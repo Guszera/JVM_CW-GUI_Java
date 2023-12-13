@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ProjectController {
@@ -48,11 +50,46 @@ public class ProjectController {
         }
     }
 
-    public void deleteTaskFromProject(String projectId, String taskId) {
+    public void addSuccessor(String projectId, String taskId, String successorId) {
         Project project = projectGraph.getProjects().get(projectId);
         if (project != null) {
-            project.removeTask(taskId);
+            project.addSuccessor(taskId, successorId);
         }
+    }
+
+    public String getAdjacencyMatrix(String projectId) {
+        Project project = projectGraph.getProjects().get(projectId);
+        if (project == null) {
+            return "Project not found.";
+        }
+
+        List<Task> tasks = new ArrayList<>(project.getTasks().values());
+        int n = tasks.size();
+
+        // Initialize the adjacency matrix
+        int[][] adjacencyMatrix = new int[n][n];
+
+        // Populate the adjacency matrix based on task successors
+        for (int i = 0; i < n; i++) {
+            Task task = tasks.get(i);
+            List<String> successors = task.getSuccessors();
+
+            for (String successorId : successors) {
+                int successorIndex = tasks.indexOf(project.getTasks().get(successorId));
+                adjacencyMatrix[i][successorIndex] = 1;
+            }
+        }
+
+        // Convert the adjacency matrix to a string for display
+        StringBuilder matrixString = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrixString.append(adjacencyMatrix[i][j]).append(" ");
+            }
+            matrixString.append("\n");
+        }
+
+        return matrixString.toString();
     }
 
     public Map<String, Project> getAllProjects() {

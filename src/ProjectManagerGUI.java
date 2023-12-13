@@ -56,6 +56,8 @@ public class ProjectManagerGUI {
         JButton addTaskButton = new JButton("Add Task");
         JButton editTaskButton = new JButton("Edit Task");
         JButton deleteTaskButton = new JButton("Delete Task");
+        JButton addSuccessorButton = new JButton("Add Successor");
+        JButton showAdjacencyMatrixButton = new JButton("Show Adjacency Matrix");
 
         createProjectButton.addActionListener(new ActionListener() {
             @Override
@@ -99,12 +101,28 @@ public class ProjectManagerGUI {
             }
         });
 
+        addSuccessorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addSuccessor();
+            }
+        });
+
+        showAdjacencyMatrixButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showAdjacencyMatrix();
+            }
+        });
+
         inputPanel.add(createProjectButton);
         inputPanel.add(editProjectButton);
         inputPanel.add(deleteProjectButton);
         inputPanel.add(addTaskButton);
         inputPanel.add(editTaskButton);
         inputPanel.add(deleteTaskButton);
+        inputPanel.add(addSuccessorButton);
+        inputPanel.add(showAdjacencyMatrixButton);
 
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
 
@@ -169,9 +187,28 @@ public class ProjectManagerGUI {
             for (Task task : project.getTasks().values()) {
                 projectList.append("\tTask ID: ").append(task.getTaskId()).append(", Task Name: ")
                         .append(task.getTaskName()).append(", Duration: ").append(task.getDuration()).append("\n");
+
+                if (!task.getSuccessors().isEmpty()) {
+                    projectList.append("\t\tSuccessors: ").append(task.getSuccessors()).append("\n");
+                }
             }
         }
         projectTextArea.setText(projectList.toString());
+    }
+
+    private void addSuccessor() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String taskId = JOptionPane.showInputDialog("Enter Task ID:");
+        String successorId = JOptionPane.showInputDialog("Enter Successor Task ID:");
+
+        controller.addSuccessor(projectId, taskId, successorId);
+        updateProjectList();
+    }
+
+    private void showAdjacencyMatrix() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String adjacencyMatrix = controller.getAdjacencyMatrix(projectId);
+        JOptionPane.showMessageDialog(frame, adjacencyMatrix, "Adjacency Matrix", JOptionPane.PLAIN_MESSAGE);
     }
 
     public void display() {

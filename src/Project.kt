@@ -5,8 +5,13 @@ class Project private constructor(val projectId: String, var projectName: String
         tasks[task.taskId] = task
     }
 
+    fun addSuccessor(taskId: String, successorId: String) {
+        tasks[taskId]?.successors?.add(successorId)
+    }
+
     fun removeTask(taskId: String) {
         tasks.remove(taskId)
+        tasks.values.forEach{ it.successors.remove(taskId) }
     }
 
     companion object {

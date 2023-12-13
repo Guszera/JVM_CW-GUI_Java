@@ -1,4 +1,4 @@
-data class Task(var taskId: String, var taskName: String, var duration: Int) {
-
+data class Task(val taskId: String, var taskName: String, var duration: Int) {
+    val successors: MutableList<String> = mutableListOf()
 }
 
