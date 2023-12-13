@@ -99,25 +99,31 @@ public class ProjectController {
             }
         }
 
-        // Convert the adjacency matrix to a string for display
-        StringBuilder matrixString = new StringBuilder();
+        // Convert the adjacency matrix to an HTML table with task IDs as labels
+        StringBuilder matrixHtml = new StringBuilder();
+        matrixHtml.append("<html><body><table border='1'>");
+
         // Add column labels (task IDs)
-        matrixString.append("\t");
+        matrixHtml.append("<tr><td></td>");
         for (String taskId : taskIds) {
-            matrixString.append(taskId).append("\t");
+            matrixHtml.append("<td>").append(taskId).append("</td>");
         }
-        matrixString.append("\n");
+        matrixHtml.append("</tr>");
 
         // Add rows with task IDs and adjacency matrix values
         for (int i = 0; i < n; i++) {
-            matrixString.append(taskIds[i]).append("\t");
+            matrixHtml.append("<tr><td>").append(taskIds[i]).append("</td>");
+
             for (int j = 0; j < n; j++) {
-                matrixString.append(adjacencyMatrix[i][j]).append("\t");
+                matrixHtml.append("<td>").append(adjacencyMatrix[i][j]).append("</td>");
             }
-            matrixString.append("\n");
+
+            matrixHtml.append("</tr>");
         }
 
-        return matrixString.toString();
+        matrixHtml.append("</table></body></html>");
+
+        return matrixHtml.toString();
     }
 
     public Map<String, Project> getAllProjects() {
