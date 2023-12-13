@@ -86,6 +86,9 @@ public class ProjectController {
         // Initialize the adjacency matrix
         int[][] adjacencyMatrix = new int[n][n];
 
+        // Convert task IDs to an array for row and column labels
+        String[] taskIds = tasks.stream().map(Task::getTaskId).toArray(String[]::new);
+
         // Populate the adjacency matrix based on task successors
         for (int i = 0; i < n; i++) {
             Task task = tasks.get(i);
@@ -98,9 +101,18 @@ public class ProjectController {
 
         // Convert the adjacency matrix to a string for display
         StringBuilder matrixString = new StringBuilder();
+        // Add column labels (task IDs)
+        matrixString.append("\t");
+        for (String taskId : taskIds) {
+            matrixString.append(taskId).append("\t");
+        }
+        matrixString.append("\n");
+
+        // Add rows with task IDs and adjacency matrix values
         for (int i = 0; i < n; i++) {
+            matrixString.append(taskIds[i]).append("\t");
             for (int j = 0; j < n; j++) {
-                matrixString.append(adjacencyMatrix[i][j]).append(" ");
+                matrixString.append(adjacencyMatrix[i][j]).append("\t");
             }
             matrixString.append("\n");
         }
