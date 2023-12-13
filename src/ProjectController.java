@@ -30,6 +30,24 @@ public class ProjectController {
         }
     }
 
+    public void editTask(String projectId, String taskId, String newTaskName, int newDuration) {
+        Project project = projectGraph.getProjects().get(projectId);
+        if (project != null) {
+            Task task = project.getTasks().get(taskId);
+            if (task != null) {
+                task.setTaskName(newTaskName);
+                task.setDuration(newDuration);
+            }
+        }
+    }
+
+    public void deleteTask(String projectId, String taskId) {
+        Project project = projectGraph.getProjects().get(projectId);
+        if (project != null) {
+            project.removeTask(taskId);
+        }
+    }
+
     public void deleteTaskFromProject(String projectId, String taskId) {
         Project project = projectGraph.getProjects().get(projectId);
         if (project != null) {

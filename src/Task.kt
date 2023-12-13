@@ -1,1 +1,4 @@
-data class Task(val taskId: String, val taskName: String, val duration: Int)
+data class Task(var taskId: String, var taskName: String, var duration: Int) {
+
+}
+

@@ -54,6 +54,8 @@ public class ProjectManagerGUI {
         JButton editProjectButton = new JButton("Edit Project");
         JButton deleteProjectButton = new JButton("Delete Project");
         JButton addTaskButton = new JButton("Add Task");
+        JButton editTaskButton = new JButton("Edit Task");
+        JButton deleteTaskButton = new JButton("Delete Task");
 
         createProjectButton.addActionListener(new ActionListener() {
             @Override
@@ -83,10 +85,26 @@ public class ProjectManagerGUI {
             }
         });
 
+        editTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editTask();
+            }
+        });
+
+        deleteTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteTask();
+            }
+        });
+
         inputPanel.add(createProjectButton);
         inputPanel.add(editProjectButton);
         inputPanel.add(deleteProjectButton);
         inputPanel.add(addTaskButton);
+        inputPanel.add(editTaskButton);
+        inputPanel.add(deleteTaskButton);
 
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
 
@@ -120,6 +138,23 @@ public class ProjectManagerGUI {
         int taskDuration = Integer.parseInt(taskDurationField.getText());
 
         controller.addTaskToProject(projectId, taskId, taskName, taskDuration);
+        updateProjectList();
+    }
+
+    private void editTask() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String taskId = JOptionPane.showInputDialog("Enter Task ID:");
+        String newTaskName = JOptionPane.showInputDialog("Enter New Task Name:");
+        int newDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter New Task Duration:"));
+
+        controller.editTask(projectId, taskId, newTaskName, newDuration);
+        updateProjectList();
+    }
+
+    private void deleteTask() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String taskId = JOptionPane.showInputDialog("Enter Task ID:");
+        controller.deleteTask(projectId, taskId);
         updateProjectList();
     }
 
