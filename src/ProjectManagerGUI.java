@@ -1,8 +1,10 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.List;
 
 public class ProjectManagerGUI {
     private ProjectController controller;
@@ -12,6 +14,7 @@ public class ProjectManagerGUI {
     private JTextField taskIdField;
     private JTextField taskNameField;
     private JTextField taskDurationField;
+
 
     public ProjectManagerGUI(ProjectController controller) {
         this.controller = controller;
@@ -57,6 +60,7 @@ public class ProjectManagerGUI {
         JButton editTaskButton = new JButton("Edit Task");
         JButton deleteTaskButton = new JButton("Delete Task");
         JButton addSuccessorButton = new JButton("Add Successor");
+        JButton removeSuccessorButton = new JButton("Remove Successor");
         JButton showAdjacencyMatrixButton = new JButton("Show Adjacency Matrix");
 
         createProjectButton.addActionListener(new ActionListener() {
@@ -108,6 +112,13 @@ public class ProjectManagerGUI {
             }
         });
 
+        removeSuccessorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeSuccessor();
+            }
+        });
+
         showAdjacencyMatrixButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,6 +133,7 @@ public class ProjectManagerGUI {
         inputPanel.add(editTaskButton);
         inputPanel.add(deleteTaskButton);
         inputPanel.add(addSuccessorButton);
+        inputPanel.add(removeSuccessorButton);
         inputPanel.add(showAdjacencyMatrixButton);
 
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
@@ -202,6 +214,15 @@ public class ProjectManagerGUI {
         String successorId = JOptionPane.showInputDialog("Enter Successor Task ID:");
 
         controller.addSuccessor(projectId, taskId, successorId);
+        updateProjectList();
+    }
+
+    private void removeSuccessor() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String taskId = JOptionPane.showInputDialog("Enter Task ID:");
+        String successorId = JOptionPane.showInputDialog("Enter Successor Task ID:");
+
+        controller.removeSuccessor(projectId, taskId, successorId);
         updateProjectList();
     }
 

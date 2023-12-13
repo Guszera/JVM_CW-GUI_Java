@@ -53,7 +53,24 @@ public class ProjectController {
     public void addSuccessor(String projectId, String taskId, String successorId) {
         Project project = projectGraph.getProjects().get(projectId);
         if (project != null) {
-            project.addSuccessor(taskId, successorId);
+            Task task = project.getTasks().get(taskId);
+            Task successorTask = project.getTasks().get(successorId);
+
+            if (task != null && successorTask != null) {
+                task.addSuccessor(successorTask);
+            }
+        }
+    }
+
+    public void removeSuccessor(String projectId, String taskId, String successorId) {
+        Project project = projectGraph.getProjects().get(projectId);
+        if (project != null) {
+            Task task = project.getTasks().get(taskId);
+            Task successorTask = project.getTasks().get(successorId);
+
+            if (task != null && successorTask != null) {
+                task.removeSuccessor(successorTask);
+            }
         }
     }
 
@@ -72,10 +89,9 @@ public class ProjectController {
         // Populate the adjacency matrix based on task successors
         for (int i = 0; i < n; i++) {
             Task task = tasks.get(i);
-            List<String> successors = task.getSuccessors();
 
-            for (String successorId : successors) {
-                int successorIndex = tasks.indexOf(project.getTasks().get(successorId));
+            for (Task successorTask : task.getSuccessors()) {
+                int successorIndex = tasks.indexOf(successorTask);
                 adjacencyMatrix[i][successorIndex] = 1;
             }
         }
