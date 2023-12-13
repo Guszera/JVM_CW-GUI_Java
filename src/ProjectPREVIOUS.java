@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-public class Project {
+
+public class ProjectPREVIOUS {
     private String projectName;
     private List<String> tasks;
 
-    public Project(String projectName) {
+    public ProjectPREVIOUS(String projectName) {
         this.projectName = projectName;
         this.tasks = new ArrayList<>();
     }
