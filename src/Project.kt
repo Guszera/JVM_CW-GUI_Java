@@ -1,4 +1,4 @@
-class Project private constructor(val projectId: String, val projectName: String) {
+class Project private constructor(val projectId: String, var projectName: String) {
     val tasks: MutableMap<String, Task> = mutableMapOf()
 
     fun addTask(task: Task) {

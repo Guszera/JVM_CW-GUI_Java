@@ -20,7 +20,7 @@ public class ProjectManagerGUI {
 
     private void initialize() {
         frame = new JFrame("Project Manager");
-        frame.setSize(400, 300);
+        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel();
@@ -51,12 +51,28 @@ public class ProjectManagerGUI {
         inputPanel.add(taskDurationField);
 
         JButton createProjectButton = new JButton("Create Project");
+        JButton editProjectButton = new JButton("Edit Project");
+        JButton deleteProjectButton = new JButton("Delete Project");
         JButton addTaskButton = new JButton("Add Task");
 
         createProjectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createProject();
+            }
+        });
+
+        editProjectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editProject();
+            }
+        });
+
+        deleteProjectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteProject();
             }
         });
 
@@ -68,6 +84,8 @@ public class ProjectManagerGUI {
         });
 
         inputPanel.add(createProjectButton);
+        inputPanel.add(editProjectButton);
+        inputPanel.add(deleteProjectButton);
         inputPanel.add(addTaskButton);
 
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
@@ -78,6 +96,20 @@ public class ProjectManagerGUI {
     private void createProject() {
         String projectName = projectNameField.getText();
         controller.createProject(projectName);
+        updateProjectList();
+    }
+
+    private void editProject() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        String newProjectName = JOptionPane.showInputDialog("Enter New Project Name:");
+
+        controller.editProject(projectId, newProjectName);
+        updateProjectList();
+    }
+
+    private void deleteProject() {
+        String projectId = JOptionPane.showInputDialog("Enter Project ID:");
+        controller.deleteProject(projectId);
         updateProjectList();
     }
 

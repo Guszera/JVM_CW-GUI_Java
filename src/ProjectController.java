@@ -12,6 +12,12 @@ public class ProjectController {
         projectGraph.addProject(project);
     }
 
+    public void editProject(String projectId, String newProjectName) {
+        Project project = projectGraph.getProjects().get(projectId);
+        if (project != null) {
+            project.setProjectName(newProjectName);
+        }
+    }
     public void deleteProject(String projectId) {
         projectGraph.removeProject(projectId);
     }
@@ -31,27 +37,8 @@ public class ProjectController {
         }
     }
 
-    public Project getProjectById(String projectId) {
-        return projectGraph.getProjects().get(projectId);
-    }
-
     public Map<String, Project> getAllProjects() {
         return projectGraph.getProjects();
     }
 
-    public Task getTaskById(String projectId, String taskId) {
-        Project project = projectGraph.getProjects().get(projectId);
-        if (project != null) {
-            return project.getTasks().get(taskId);
-        }
-        return null;
-    }
-
-    public Map<String, Task> getAllTasksInProject(String projectId) {
-        Project project = projectGraph.getProjects().get(projectId);
-        if (project != null) {
-            return project.getTasks();
-        }
-        return null;
-    }
 }
